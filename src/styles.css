@@ -62,26 +62,29 @@
 }
 
 :root {
-  --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.129 0.042 264.695);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.129 0.042 264.695);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.129 0.042 264.695);
-  --primary: oklch(0.208 0.042 265.755);
-  --primary-foreground: oklch(0.984 0.003 247.858);
-  --secondary: oklch(0.968 0.007 247.896);
-  --secondary-foreground: oklch(0.208 0.042 265.755);
-  --muted: oklch(0.968 0.007 247.896);
-  --muted-foreground: oklch(0.554 0.046 257.417);
-  --accent: oklch(0.968 0.007 247.896);
-  --accent-foreground: oklch(0.208 0.042 265.755);
+  --radius: 0.25rem;
+  --background: oklch(0.145 0.004 90);
+  --foreground: oklch(0.95 0.006 85);
+  --card: oklch(0.19 0.005 90);
+  --card-foreground: oklch(0.95 0.006 85);
+  --popover: oklch(0.19 0.005 90);
+  --popover-foreground: oklch(0.95 0.006 85);
+  --primary: oklch(0.79 0.128 84);
+  --primary-foreground: oklch(0.16 0.006 90);
+  --secondary: oklch(0.24 0.006 90);
+  --secondary-foreground: oklch(0.95 0.006 85);
+  --muted: oklch(0.24 0.006 90);
+  --muted-foreground: oklch(0.7 0.012 85);
+  --accent: oklch(0.86 0.11 88);
+  --accent-foreground: oklch(0.16 0.006 90);
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.984 0.003 247.858);
-  --border: oklch(0.929 0.013 255.508);
-  --input: oklch(0.929 0.013 255.508);
-  --ring: oklch(0.704 0.04 256.788);
+  --border: oklch(0.3 0.012 88);
+  --input: oklch(0.28 0.01 88);
+  --ring: oklch(0.79 0.128 84);
+  --gold-gradient: linear-gradient(135deg, oklch(0.72 0.11 78), oklch(0.9 0.13 92), oklch(0.68 0.105 72));
+  --shadow-gold: 0 18px 50px -22px oklch(0.79 0.128 84 / 0.55);
+  --font-display: "Tajawal", "Cairo", system-ui, sans-serif;
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
@@ -140,5 +143,93 @@
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
+  }
+}
+
+@theme inline {
+  --font-sans: var(--font-display);
+  --color-gold: var(--primary);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    font-family: var(--font-display);
+    -webkit-font-smoothing: antialiased;
+  }
+  ::selection {
+    background: var(--primary);
+    color: var(--primary-foreground);
+  }
+}
+
+@utility text-gold-gradient {
+  background: var(--gold-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+@utility btn-gold {
+  background: var(--gold-gradient);
+  color: var(--primary-foreground);
+  box-shadow: var(--shadow-gold);
+  transition: transform 0.25s ease, filter 0.25s ease;
+  &:hover {
+    filter: brightness(1.06);
+    transform: translateY(-2px);
+  }
+}
+
+@utility btn-outline-gold {
+  border: 1px solid color-mix(in oklab, var(--primary) 55%, transparent);
+  color: var(--primary);
+  transition: background-color 0.25s ease, transform 0.25s ease;
+  &:hover {
+    background-color: color-mix(in oklab, var(--primary) 12%, transparent);
+    transform: translateY(-2px);
+  }
+}
+
+@utility hairline {
+  background: linear-gradient(
+    to inline-end,
+    transparent,
+    color-mix(in oklab, var(--primary) 60%, transparent),
+    transparent
+  );
+}
+
+@utility surface-card {
+  background-color: var(--card);
+  border: 1px solid var(--border);
+  transition: border-color 0.3s ease, transform 0.3s ease;
+  &:hover {
+    border-color: color-mix(in oklab, var(--primary) 45%, transparent);
+    transform: translateY(-4px);
+  }
+}
+
+@utility grid-lines {
+  background-image:
+    linear-gradient(color-mix(in oklab, var(--primary) 7%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in oklab, var(--primary) 7%, transparent) 1px, transparent 1px);
+  background-size: 64px 64px;
+}
+
+@utility reveal {
+  animation: reveal-up 0.7s ease both;
+}
+
+@keyframes reveal-up {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
   }
 }
